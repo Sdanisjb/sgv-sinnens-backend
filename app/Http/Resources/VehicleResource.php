@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\PermisoAutrisa;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\PermisoAutrisaResource;
+use App\Models\PermisoTranspMercancia;
 use App\Models\Soat;
 
 class VehicleResource extends JsonResource
@@ -26,7 +27,8 @@ class VehicleResource extends JsonResource
             'anho' => $this->anho,
             'permiso_autrisa' => new PermisoAutrisaResource(PermisoAutrisa::find($this->placa)),
             'permiso_mtc' => new PermisoMTCResource(PermisoAutrisa::find($this->placa)),
-            'soat' => new SoatResource(Soat::find($this->placa))
+            'soat' => new SoatResource(Soat::find($this->placa)),
+            'permiso_transp_mercancia' => new PermisoTranspMercancia(PermisoTranspMercancia::find($this->placa))
         ];
     }
 }
