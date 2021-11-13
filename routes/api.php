@@ -4,6 +4,7 @@ use App\Http\Controllers\PermisoAutrisaControlador;
 use App\Http\Controllers\PermisoMTCControlador;
 use App\Http\Controllers\PermisoTranspMercanciaControlador;
 use App\Http\Controllers\SoatControlador;
+use App\Http\Controllers\UsuariosControlador;
 use App\Http\Controllers\VehiculoControlador;
 use App\Http\Resources\VehicleResource;
 use App\Models\Vehiculo;
@@ -34,3 +35,5 @@ Route::apiResource('vehicles.permiso_autrisa', PermisoAutrisaControlador::class)
 Route::apiResource('vehicles.permiso_mtc', PermisoMTCControlador::class)->shallow();
 Route::apiResource('vehicles.soat', SoatControlador::class)->shallow();
 Route::apiResource('vehicles.permiso_transp_mercancia', PermisoTranspMercanciaControlador::class)->shallow();
+
+Route::apiResource('users', UsuariosControlador::class);
