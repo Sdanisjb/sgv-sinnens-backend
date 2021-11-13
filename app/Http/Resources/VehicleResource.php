@@ -28,7 +28,7 @@ class VehicleResource extends JsonResource
             'permiso_autrisa' => new PermisoAutrisaResource(PermisoAutrisa::find($this->placa)),
             'permiso_mtc' => new PermisoMTCResource(PermisoAutrisa::find($this->placa)),
             'soat' => new SoatResource(Soat::find($this->placa)),
-            'permiso_transp_mercancia' => new PermisoTranspMercancia(PermisoTranspMercancia::find($this->placa))
+            'permiso_transp_mercancia' => new PermisoTranspMercanciaResource(PermisoTranspMercancia::find($this->placa))
         ];
     }
 }
