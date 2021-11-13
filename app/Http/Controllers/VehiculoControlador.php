@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\VehicleResource;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class VehiculoControlador extends Controller
         $request->validate([
             'placa' => 'required',
             'anho' => 'required',
-            'categoria' => 'required',
+            'tipo' => 'required',
             'unidad' => 'required',
             'usuario' => 'required'
         ]);
@@ -41,12 +42,12 @@ class VehiculoControlador extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $placa
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($placa)
     {
-        $vehicle = Vehiculo::findOrFail($id);
+        $vehicle = Vehiculo::findOrFail($placa);
         return \response($vehicle);
     }
 
@@ -54,12 +55,12 @@ class VehiculoControlador extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $placa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $placa)
     {
-        $vehicle = Vehiculo::findOrFail($id)->update($request->all());
+        $vehicle = Vehiculo::findOrFail($placa)->update($request->all());
         return \response($vehicle);
     }
 
@@ -69,9 +70,15 @@ class VehiculoControlador extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($placa)
     {
-        Vehiculo::destroy($id);
+        Vehiculo::destroy($placa);
         return \response('Vehiculo eliminado de la base de datos');
+    }
+
+    public function permiso_autrisa($id)
+    {
+        $vehicle = Vehiculo::findOrFail($id);
+        return \response($vehicle->PermisoAutrisa());
     }
 }

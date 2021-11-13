@@ -5,26 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Vehiculo extends Model
+class Soat extends Model
 {
     use HasFactory;
 
-    protected $table = 'vehiculos';
+    protected $table = 'soats';
 
     protected $primaryKey = 'placa';
 
     protected $keyType = 'string';
 
     protected $fillable = [
-        'usuario',
-        'anho',
-        'tipo',
-        'unidad',
-        'placa'
+        'placa',
+        'fecha_renovacion',
+        'fecha_venc',
     ];
 
-    public function PermisoAutrisa()
+    public function vehiculo()
     {
-        return $this->hasOne(PermisoAutrisa::class, 'placa');
+        return $this->belongsTo(Vehiculo::class, 'placa');
     }
 }

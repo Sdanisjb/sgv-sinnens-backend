@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVehiculosTable extends Migration
+class CreatePermisoMTCSTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateVehiculosTable extends Migration
      */
     public function up()
     {
-        Schema::create('vehiculos', function (Blueprint $table) {
-            $table->string('placa')->primary();
-            $table->string('usuario');
-            $table->string('unidad');
-            $table->mediumInteger('anho');
-            $table->enum('tipo', ["N1", "N2", "N3", "M1", "M2", "M3"]);
+        Schema::create('permisos_mtc', function (Blueprint $table) {
+            $table->string('placa', 7)->primary();
+            $table->date('fecha_renovacion');
+            $table->date('fecha_venc');
             $table->nullableTimestamps();
+
+            $table->foreign('placa')->references('placa')->on('vehiculos')->onDelete('cascade');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateVehiculosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehiculos');
+        Schema::dropIfExists('permisos_mtc');
     }
 }
