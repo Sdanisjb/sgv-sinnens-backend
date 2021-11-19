@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthControlador;
 use App\Http\Controllers\PermisoAutrisaControlador;
 use App\Http\Controllers\PermisoMTCControlador;
 use App\Http\Controllers\PermisoTranspMercanciaControlador;
@@ -8,6 +9,7 @@ use App\Http\Controllers\UsuariosControlador;
 use App\Http\Controllers\VehiculoControlador;
 use App\Http\Resources\VehicleResource;
 use App\Models\Vehiculo;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +23,18 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+/*Ruta de prueba, solo utilizar cuando se quiere probar el funcionamiento de algo*/
+
+Route::get('/test', function () {
+    if (User::find('72178959')->gerente_general) {
+        return 'Si es gerente';
+    } else {
+        return 'No es gerente';
+    }
+});
+
+/*Autenticacion*/
+Route::post('/login', [AuthControlador::class, 'login']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -28,9 +42,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/vehicles_and_permissions', function () {
     return VehicleResource::collection(Vehiculo::all());
-});
+})->middleware('auth:sanctum');
 
-Route::apiResource('vehicles', VehiculoControlador::class);
+Route::apiResource('vehicles', VehiculoControlador::class)->middleware('auth:sanctum');
 Route::apiResource('vehicles.permiso_autrisa', PermisoAutrisaControlador::class)->shallow();
 Route::apiResource('vehicles.permiso_mtc', PermisoMTCControlador::class)->shallow();
 Route::apiResource('vehicles.soat', SoatControlador::class)->shallow();
