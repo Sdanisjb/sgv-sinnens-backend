@@ -15,6 +15,10 @@ class PermisoMTC extends Model
 
     protected $keyType = 'string';
 
+    public $timestamps = false;
+
+    public $incrementing = false;
+
     protected $fillable = [
         'placa',
         'fecha_renovacion',

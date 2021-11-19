@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PermisoTranspMercancia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PermisoTranspMercanciaControlador extends Controller
 {
@@ -27,13 +28,18 @@ class PermisoTranspMercanciaControlador extends Controller
      */
     public function store($placa, Request $request)
     {
-        $request->validate([
-            'fecha_renovacion' => 'required',
-            'fecha_venc' => 'required'
-        ]);
+        if (Auth::user()->admin_logistica) {
+            $request->validate([
+                'fecha_renovacion' => 'required',
+                'fecha_venc' => 'required'
+            ]);
 
-        $permiso = PermisoTranspMercancia::create($request->all() + ["placa" => $placa]);
-        return \response($permiso);
+            $permiso = PermisoTranspMercancia::create($request->all() + ["placa" => $placa]);
+            return \response($permiso);
+        }
+        return response()->json([
+            'message' => 'unauthorized request'
+        ]);
     }
 
     /**
@@ -56,8 +62,13 @@ class PermisoTranspMercanciaControlador extends Controller
      */
     public function update(Request $request, $placa)
     {
-        $permiso = PermisoTranspMercancia::findOrFail($placa)->update($request->all());
-        return \response($permiso);
+        if (Auth::user()->admin_logistica) {
+            $permiso = PermisoTranspMercancia::findOrFail($placa)->update($request->all());
+            return \response($permiso);
+        }
+        return response()->json([
+            'message' => 'unauthorized request'
+        ]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PermisoMTC;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PermisoMTCControlador extends Controller
 {
@@ -26,13 +27,18 @@ class PermisoMTCControlador extends Controller
      */
     public function store($placa, Request $request)
     {
-        $request->validate([
-            'fecha_renovacion' => 'required',
-            'fecha_venc' => 'required'
-        ]);
+        if (Auth::user()->admin_logistica) {
+            $request->validate([
+                'fecha_renovacion' => 'required',
+                'fecha_venc' => 'required'
+            ]);
 
-        $permiso = PermisoMTC::create($request->all() + ["placa" => $placa]);
-        return \response($permiso);
+            $permiso = PermisoMTC::create($request->all() + ["placa" => $placa]);
+            return \response($permiso);
+        }
+        return response()->json([
+            'message' => 'unauthorized request'
+        ]);
     }
 
     /**
@@ -56,8 +62,13 @@ class PermisoMTCControlador extends Controller
      */
     public function update(Request $request, $placa)
     {
-        $permiso = PermisoMTC::findOrFail($placa)->update($request->all());
-        return \response($permiso);
+        if (Auth::user()->admin_logistica) {
+            $permiso = PermisoMTC::findOrFail($placa)->update($request->all());
+            return \response($permiso);
+        }
+        return response()->json([
+            'message' => 'unauthorized request'
+        ]);
     }
 
     /**

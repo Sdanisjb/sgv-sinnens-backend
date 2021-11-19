@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Soat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SoatControlador extends Controller
 {
@@ -26,13 +27,18 @@ class SoatControlador extends Controller
      */
     public function store($placa, Request $request)
     {
-        $request->validate([
-            'fecha_renovacion' => 'required',
-            'fecha_venc' => 'required'
-        ]);
+        if (Auth::user()->admin_logistica) {
+            $request->validate([
+                'fecha_renovacion' => 'required',
+                'fecha_venc' => 'required'
+            ]);
 
-        $permiso = Soat::create($request->all() + ["placa" => $placa]);
-        return \response($permiso);
+            $permiso = Soat::create($request->all() + ["placa" => $placa]);
+            return \response($permiso);
+        }
+        return response()->json([
+            'message' => 'unauthorized request'
+        ]);
     }
 
     /**
@@ -55,8 +61,14 @@ class SoatControlador extends Controller
      */
     public function update(Request $request, $placa)
     {
-        $permiso = Soat::findOrFail($placa)->update($request->all());
-        return \response($permiso);
+
+        if (Auth::user()->admin_logistica) {
+            $permiso = Soat::findOrFail($placa)->update($request->all());
+            return \response($permiso);
+        }
+        return response()->json([
+            'message' => 'unauthorized request'
+        ]);
     }
 
     /**
