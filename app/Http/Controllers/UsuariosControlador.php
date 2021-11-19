@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use function GuzzleHttp\Promise\all;
 
@@ -28,15 +30,31 @@ class UsuariosControlador extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombres' => 'required',
-            'apellidos' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'DNI' => 'required'
+
+        if (Auth::user()->gerente_general) {
+            $request->validate([
+                'nombres' => 'required|string|max:255',
+                'apellidos' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'password' => 'required|string|min:8',
+                'DNI' => 'required|string|min:8|max:8'
+            ]);
+
+            $request['password'] = Hash::make($request['password']);
+
+            $user = User::create($request->all());
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'Bearer'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'unauthorized'
         ]);
-        $user = User::create($request->all());
-        return \response($user);
     }
 
     /**
@@ -72,7 +90,13 @@ class UsuariosControlador extends Controller
      */
     public function destroy($dni)
     {
-        User::destroy($dni);
-        return \response("Usuario eliminado");
+        if (Auth::user()->gerente_general) {
+            User::destroy($dni);
+            return \response("Usuario eliminado");
+        }
+
+        return response()->json([
+            'message' => 'unauthorized access'
+        ]);
     }
 }
