@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\VehicleResource;
 use App\Models\Vehiculo;
+use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VehiculoControlador extends Controller
 {
@@ -27,16 +29,22 @@ class VehiculoControlador extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'placa' => 'required',
-            'anho' => 'required',
-            'tipo' => 'required',
-            'unidad' => 'required',
-            'usuario' => 'required'
-        ]);
+        if (Auth::user()->admin_logistica) {
+            $request->validate([
+                'placa' => 'required|string|min:7|max:7',
+                'anho' => 'required|numeric',
+                'tipo' => 'required',
+                'unidad' => 'required',
+                'usuario' => 'required'
+            ]);
 
-        $vehicle = Vehiculo::create($request->all());
-        return \response($vehicle);
+            $vehicle = Vehiculo::create($request->all());
+            return \response($vehicle);
+        }
+
+        return response()->json([
+            "message" => "unauthorized access"
+        ]);
     }
 
     /**
@@ -47,8 +55,14 @@ class VehiculoControlador extends Controller
      */
     public function show($placa)
     {
-        $vehicle = Vehiculo::findOrFail($placa);
-        return \response($vehicle);
+        if (Auth::user()->admin_logistica) {
+            $vehicle = Vehiculo::findOrFail($placa);
+            return \response($vehicle);
+        }
+
+        return response()->json([
+            'message' => 'unauthorized access'
+        ]);
     }
 
     /**
@@ -60,8 +74,14 @@ class VehiculoControlador extends Controller
      */
     public function update(Request $request, $placa)
     {
-        $vehicle = Vehiculo::findOrFail($placa)->update($request->all());
-        return \response($vehicle);
+        if (Auth::user()->admin_logistica) {
+            $vehicle = Vehiculo::findOrFail($placa)->update($request->all());
+            return \response($vehicle);
+        }
+
+        return response()->json([
+            'message' => 'unauthorized access'
+        ]);
     }
 
     /**
@@ -72,13 +92,13 @@ class VehiculoControlador extends Controller
      */
     public function destroy($placa)
     {
-        Vehiculo::destroy($placa);
-        return \response('Vehiculo eliminado de la base de datos');
-    }
+        if (Auth::user()->admin_logistica) {
+            Vehiculo::destroy($placa);
+            return \response('Vehiculo eliminado de la base de datos');
+        }
 
-    public function permiso_autrisa($id)
-    {
-        $vehicle = Vehiculo::findOrFail($id);
-        return \response($vehicle->PermisoAutrisa());
+        return response()->json([
+            'message' => 'unauthorized access'
+        ]);
     }
 }
