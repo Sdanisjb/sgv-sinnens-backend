@@ -18,6 +18,9 @@ class User extends Authenticatable
 
     protected $keyType = 'string';
 
+    public $timestamps = 'false';
+
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -49,4 +52,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function gerente_general()
+    {
+        return $this->hasOne(Gerente_General::class, 'DNI', 'DNI');
+    }
+
+    public function gerente_tecnico()
+    {
+        return $this->hasOne(Gerente_Tecnico::class, 'DNI', 'DNI');
+    }
+
+    public function admin_logistica()
+    {
+        return $this->hasOne(Admin_Logistica::class, 'DNI', 'DNI');
+    }
+
+    public function operador()
+    {
+        return $this->hasOne(Gerente_Tecnico::class, 'DNI', 'DNI');
+    }
 }

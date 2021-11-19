@@ -15,6 +15,10 @@ class Vehiculo extends Model
 
     protected $keyType = 'string';
 
+    public $timestamps = false;
+
+    public $incrementing = false;
+
     protected $fillable = [
         'usuario',
         'anho',
@@ -26,5 +30,18 @@ class Vehiculo extends Model
     public function PermisoAutrisa()
     {
         return $this->hasOne(PermisoAutrisa::class, 'placa');
+    }
+
+    public function PermisoMTC()
+    {
+        return $this->hasOne(PermisoMTC::class, 'placa');
+    }
+    public function PermisoTranspMercancia()
+    {
+        return $this->hasOne(PermisoTranspMercancia::class, 'placa');
+    }
+    public function Soat()
+    {
+        return $this->hasOne(Soat::class, 'placa');
     }
 }
