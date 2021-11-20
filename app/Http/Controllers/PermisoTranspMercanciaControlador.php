@@ -28,18 +28,18 @@ class PermisoTranspMercanciaControlador extends Controller
      */
     public function store($placa, Request $request)
     {
-        if (Auth::user()->admin_logistica) {
-            $request->validate([
-                'fecha_renovacion' => 'required',
-                'fecha_venc' => 'required'
-            ]);
-
-            $permiso = PermisoTranspMercancia::create($request->all() + ["placa" => $placa]);
-            return \response($permiso);
-        }
-        return response()->json([
-            'message' => 'unauthorized request'
+        // if (Auth::user()->admin_logistica) {
+        $request->validate([
+            'fecha_renovacion' => 'required',
+            'fecha_venc' => 'required'
         ]);
+
+        $permiso = PermisoTranspMercancia::create($request->all() + ["placa" => $placa]);
+        return \response($permiso);
+        // }
+        // return response()->json([
+        //     'message' => 'unauthorized request'
+        // ]);
     }
 
     /**
@@ -62,13 +62,13 @@ class PermisoTranspMercanciaControlador extends Controller
      */
     public function update(Request $request, $placa)
     {
-        if (Auth::user()->admin_logistica) {
-            $permiso = PermisoTranspMercancia::findOrFail($placa)->update($request->all());
-            return \response($permiso);
-        }
-        return response()->json([
-            'message' => 'unauthorized request'
-        ]);
+        // if (Auth::user()->admin_logistica) {
+        $permiso = PermisoTranspMercancia::findOrFail($placa)->update($request->all());
+        return \response($permiso);
+        // }
+        // return response()->json([
+        //     'message' => 'unauthorized request'
+        // ]);
     }
 
     /**

@@ -40,14 +40,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**Rutas autenticadas */
+// Route::get('/vehicles_and_permissions', function () {
+//     return VehicleResource::collection(Vehiculo::all());
+// })->middleware('auth:sanctum');
+
+// Route::apiResource('vehicles', VehiculoControlador::class)->middleware('auth:sanctum');
+// Route::apiResource('vehicles.permiso_autrisa', PermisoAutrisaControlador::class)->shallow()->middleware('auth:sanctum');
+// Route::apiResource('vehicles.permiso_mtc', PermisoMTCControlador::class)->shallow()->middleware('auth:sanctum');
+// Route::apiResource('vehicles.soat', SoatControlador::class)->shallow()->middleware('auth:sanctum');
+// Route::apiResource('vehicles.permiso_transp_mercancia', PermisoTranspMercanciaControlador::class)->shallow()->middleware('auth:sanctum');
+
+// Route::apiResource('users', UsuariosControlador::class)->middleware('auth:sanctum');
+
+/**Rutas sin autenticación */
 Route::get('/vehicles_and_permissions', function () {
     return VehicleResource::collection(Vehiculo::all());
-})->middleware('auth:sanctum');
+});
 
-Route::apiResource('vehicles', VehiculoControlador::class)->middleware('auth:sanctum');
-Route::apiResource('vehicles.permiso_autrisa', PermisoAutrisaControlador::class)->shallow()->middleware('auth:sanctum');
-Route::apiResource('vehicles.permiso_mtc', PermisoMTCControlador::class)->shallow()->middleware('auth:sanctum');
-Route::apiResource('vehicles.soat', SoatControlador::class)->shallow()->middleware('auth:sanctum');
-Route::apiResource('vehicles.permiso_transp_mercancia', PermisoTranspMercanciaControlador::class)->shallow()->middleware('auth:sanctum');
+Route::apiResource('vehicles', VehiculoControlador::class);
+Route::apiResource('vehicles.permiso_autrisa', PermisoAutrisaControlador::class)->shallow();
+Route::apiResource('vehicles.permiso_mtc', PermisoMTCControlador::class)->shallow();
+Route::apiResource('vehicles.soat', SoatControlador::class)->shallow();
+Route::apiResource('vehicles.permiso_transp_mercancia', PermisoTranspMercanciaControlador::class)->shallow();
 
-Route::apiResource('users', UsuariosControlador::class)->middleware('auth:sanctum');
+Route::apiResource('users', UsuariosControlador::class);

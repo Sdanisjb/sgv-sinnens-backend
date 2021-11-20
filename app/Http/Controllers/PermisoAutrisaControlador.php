@@ -27,18 +27,18 @@ class PermisoAutrisaControlador extends Controller
      */
     public function store($placa, Request $request)
     {
-        if (Auth::user()->admin_logistica) {
-            $request->validate([
-                'fecha_emision' => 'required',
-                'fecha_venc' => 'required'
-            ]);
-
-            $permiso = PermisoAutrisa::create($request->all() + ["placa" => $placa]);
-            return \response($permiso);
-        }
-        return response()->json([
-            'message' => 'unauthorized request'
+        //if (Auth::user()->admin_logistica) {
+        $request->validate([
+            'fecha_emision' => 'required',
+            'fecha_venc' => 'required'
         ]);
+
+        $permiso = PermisoAutrisa::create($request->all() + ["placa" => $placa]);
+        return \response($permiso);
+        // }
+        // return response()->json([
+        //     'message' => 'unauthorized request'
+        // ]);
     }
 
     /**
@@ -62,13 +62,13 @@ class PermisoAutrisaControlador extends Controller
      */
     public function update(Request $request, $placa)
     {
-        if (Auth::user()->admin_logistica) {
-            $permiso = PermisoAutrisa::findOrFail($placa)->update($request->all());
-            return \response($permiso);
-        }
-        return response()->json([
-            'message' => 'unauthorized request'
-        ]);
+        //if (Auth::user()->admin_logistica) {
+        $permiso = PermisoAutrisa::findOrFail($placa)->update($request->all());
+        return \response($permiso);
+        // }
+        // return response()->json([
+        //     'message' => 'unauthorized request'
+        // ]);
     }
 
     /**

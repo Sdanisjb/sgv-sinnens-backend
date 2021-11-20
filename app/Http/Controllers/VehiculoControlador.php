@@ -29,22 +29,22 @@ class VehiculoControlador extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->admin_logistica) {
-            $request->validate([
-                'placa' => 'required|string|min:7|max:7',
-                'anho' => 'required|numeric',
-                'tipo' => 'required',
-                'unidad' => 'required',
-                'usuario' => 'required'
-            ]);
-
-            $vehicle = Vehiculo::create($request->all());
-            return \response($vehicle);
-        }
-
-        return response()->json([
-            "message" => "unauthorized access"
+        //if (Auth::user()->admin_logistica) {
+        $request->validate([
+            'placa' => 'required|string|min:7|max:7',
+            'anho' => 'required|numeric',
+            'tipo' => 'required',
+            'unidad' => 'required',
+            'usuario' => 'required'
         ]);
+
+        $vehicle = Vehiculo::create($request->all());
+        return \response($vehicle);
+        // }
+
+        // return response()->json([
+        //     "message" => "unauthorized access"
+        // ]);
     }
 
     /**
@@ -55,14 +55,14 @@ class VehiculoControlador extends Controller
      */
     public function show($placa)
     {
-        if (Auth::user()->admin_logistica) {
-            $vehicle = Vehiculo::findOrFail($placa);
-            return \response($vehicle);
-        }
+        //if (Auth::user()->admin_logistica) {
+        $vehicle = Vehiculo::findOrFail($placa);
+        return \response($vehicle);
+        // }
 
-        return response()->json([
-            'message' => 'unauthorized access'
-        ]);
+        // return response()->json([
+        //     'message' => 'unauthorized access'
+        // ]);
     }
 
     /**
@@ -74,14 +74,14 @@ class VehiculoControlador extends Controller
      */
     public function update(Request $request, $placa)
     {
-        if (Auth::user()->admin_logistica) {
-            $vehicle = Vehiculo::findOrFail($placa)->update($request->all());
-            return \response($vehicle);
-        }
+        //if (Auth::user()->admin_logistica) {
+        $vehicle = Vehiculo::findOrFail($placa)->update($request->all());
+        return \response($vehicle);
+        //}
 
-        return response()->json([
-            'message' => 'unauthorized access'
-        ]);
+        // return response()->json([
+        //     'message' => 'unauthorized access'
+        // ]);
     }
 
     /**

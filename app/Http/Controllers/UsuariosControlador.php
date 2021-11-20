@@ -31,30 +31,30 @@ class UsuariosControlador extends Controller
     public function store(Request $request)
     {
 
-        if (Auth::user()->gerente_general) {
-            $request->validate([
-                'nombres' => 'required|string|max:255',
-                'apellidos' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
-                'password' => 'required|string|min:8',
-                'DNI' => 'required|string|min:8|max:8'
-            ]);
+        // if (Auth::user()->gerente_general) {
+        $request->validate([
+            'nombres' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|min:8',
+            'DNI' => 'required|string|min:8|max:8'
+        ]);
 
-            $request['password'] = Hash::make($request['password']);
+        $request['password'] = Hash::make($request['password']);
 
-            $user = User::create($request->all());
+        $user = User::create($request->all());
 
-            $token = $user->createToken('auth_token')->plainTextToken;
-
-            return response()->json([
-                'access_token' => $token,
-                'token_type' => 'Bearer'
-            ]);
-        }
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'unauthorized'
+            'access_token' => $token,
+            'token_type' => 'Bearer'
         ]);
+        // }
+
+        // return response()->json([
+        //     'message' => 'unauthorized'
+        // ]);
     }
 
     /**
@@ -90,13 +90,13 @@ class UsuariosControlador extends Controller
      */
     public function destroy($dni)
     {
-        if (Auth::user()->gerente_general) {
-            User::destroy($dni);
-            return \response("Usuario eliminado");
-        }
+        // if (Auth::user()->gerente_general) {
+        User::destroy($dni);
+        return \response("Usuario eliminado");
+        // }
 
-        return response()->json([
-            'message' => 'unauthorized access'
-        ]);
+        // return response()->json([
+        //     'message' => 'unauthorized access'
+        // ]);
     }
 }
