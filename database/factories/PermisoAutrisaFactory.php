@@ -23,8 +23,8 @@ class PermisoAutrisaFactory extends Factory
     {
         return [
             'placa' => $this->faker->unique()->bothify('???-###'),
-            'fecha_emision' => '2021-01-01',
-            'fecha_venc' => '2021-10-10'
+            'fecha_emision' => $this->faker->dateTimeBetween('-3 weeks', 'now'),
+            'fecha_venc' => $this->faker->dateTimeBetween('now', '+2 months')
         ];
     }
 }
