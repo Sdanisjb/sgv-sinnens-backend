@@ -60,15 +60,15 @@ Route::get('/vehicles_and_permissions', function () {
 });
 
 Route::apiResource('vehicles', VehiculoControlador::class);
-// Route::apiResource('vehicles.permiso_autrisa', PermisoAutrisaControlador::class)->shallow();
-// Route::apiResource('vehicles.permiso_mtc', PermisoMTCControlador::class)->shallow();
-// Route::apiResource('vehicles.soat', SoatControlador::class)->shallow();
-// Route::apiResource('vehicles.permiso_transp_mercancia', PermisoTranspMercanciaControlador::class)->shallow();
+Route::apiResource('vehicles.permiso_autrisa', PermisoAutrisaControlador::class)->shallow();
+Route::apiResource('vehicles.permiso_mtc', PermisoMTCControlador::class)->shallow();
+Route::apiResource('vehicles.soat', SoatControlador::class)->shallow();
+Route::apiResource('vehicles.permiso_transp_mercancia', PermisoTranspMercanciaControlador::class)->shallow();
 
-Route::apiResource('vehicles.permiso_autrisa', PermisoAutrisaControlador::class);
-Route::apiResource('vehicles.permiso_mtc', PermisoMTCControlador::class);
-Route::apiResource('vehicles.soat', SoatControlador::class);
-Route::apiResource('vehicles.permiso_transp_mercancia', PermisoTranspMercanciaControlador::class);
+// Route::apiResource('vehicles.permiso_autrisa', PermisoAutrisaControlador::class);
+// Route::apiResource('vehicles.permiso_mtc', PermisoMTCControlador::class);
+// Route::apiResource('vehicles.soat', SoatControlador::class);
+// Route::apiResource('vehicles.permiso_transp_mercancia', PermisoTranspMercanciaControlador::class);
 
 
 
