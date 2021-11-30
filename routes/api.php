@@ -53,4 +53,4 @@ Route::apiResource('vehicles.soat', SoatControlador::class)->shallow()->middlewa
 Route::apiResource('vehicles.permiso_transp_mercancia', PermisoTranspMercanciaControlador::class)->shallow()->middleware('auth:sanctum');
 
 Route::apiResource('users', UsuariosControlador::class)->middleware('auth:sanctum');
-Route::apiResource('vehicles.registros_mantenimiento', RegistroMantenimientoControlador::class);
+Route::apiResource('vehicles.registros_mantenimiento', RegistroMantenimientoControlador::class)->middleware('auth:sanctum');

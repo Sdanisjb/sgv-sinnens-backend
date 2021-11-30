@@ -20,9 +20,25 @@ class AuthControlador extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        $roles = [];
+        if ($user->gerente_general) {
+            array_push($roles, 'gerente_general');
+        }
+        if ($user->gerente_tecnico) {
+            array_push($roles, 'gerente_tecnico');
+        }
+        if ($user->admin_logistica) {
+            array_push($roles, 'admin_logistica');
+        }
+        if ($user->operador) {
+            array_push($roles, 'operador');
+        }
+
+
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'Bearer'
+            'token_type' => 'Bearer',
+            'roles' => $roles
         ]);
     }
 
