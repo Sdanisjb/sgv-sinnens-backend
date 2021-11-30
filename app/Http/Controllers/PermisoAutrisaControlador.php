@@ -75,6 +75,19 @@ class PermisoAutrisaControlador extends Controller
     {
         if (Auth::user()->admin_logistica) {
             $permiso = PermisoAutrisa::findOrFail($placa)->update($request->all());
+
+
+            $observaciones = $request->input('observacion');
+
+            $observaciones_borradas = ObservacionAutrisa::where('placa_vehiculo', $placa)->delete();
+
+            foreach ($observaciones as $observacion) {
+                ObservacionAutrisa::create([
+                    'placa_vehiculo' => $placa,
+                    'descripcion' => $observacion['descripcion']
+                ]);
+            }
+
             return \response($permiso);
         }
         return response()->json([
