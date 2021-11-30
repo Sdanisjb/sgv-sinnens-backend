@@ -4,10 +4,12 @@ use App\Http\Controllers\AuthControlador;
 use App\Http\Controllers\PermisoAutrisaControlador;
 use App\Http\Controllers\PermisoMTCControlador;
 use App\Http\Controllers\PermisoTranspMercanciaControlador;
+use App\Http\Controllers\RegistroMantenimientoControlador;
 use App\Http\Controllers\SoatControlador;
 use App\Http\Controllers\UsuariosControlador;
 use App\Http\Controllers\VehiculoControlador;
 use App\Http\Resources\VehicleResource;
+use App\Models\RegistroMantenimiento;
 use App\Models\Vehiculo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -51,3 +53,4 @@ Route::apiResource('vehicles.soat', SoatControlador::class)->shallow()->middlewa
 Route::apiResource('vehicles.permiso_transp_mercancia', PermisoTranspMercanciaControlador::class)->shallow()->middleware('auth:sanctum');
 
 Route::apiResource('users', UsuariosControlador::class)->middleware('auth:sanctum');
+Route::apiResource('vehicles.registros_mantenimiento', RegistroMantenimientoControlador::class);
