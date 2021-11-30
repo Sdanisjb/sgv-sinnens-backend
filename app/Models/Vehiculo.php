@@ -44,4 +44,9 @@ class Vehiculo extends Model
     {
         return $this->hasOne(Soat::class, 'placa');
     }
+
+    public function RegistrosMantenimiento()
+    {
+        return $this->hasMany(RegistroMantenimiento::class, 'placa_vehiculo', 'placa');
+    }
 }

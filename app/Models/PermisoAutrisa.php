@@ -32,4 +32,9 @@ class PermisoAutrisa extends Model
     {
         return $this->belongsTo(Vehiculo::class, 'placa');
     }
+
+    function observacion()
+    {
+        return $this->hasMany(ObservacionAutrisa::class, 'placa_vehiculo', 'placa');
+    }
 }

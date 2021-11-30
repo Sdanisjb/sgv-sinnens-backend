@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ObservacionAutrisa;
 use App\Models\PermisoAutrisa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,16 @@ class PermisoAutrisaControlador extends Controller
             ]);
 
             $permiso = PermisoAutrisa::create($request->all() + ["placa" => $placa]);
+
+            $observaciones = $request->input('observacion');
+
+            foreach ($observaciones as $observacion) {
+                ObservacionAutrisa::create([
+                    'placa_vehiculo' => $placa,
+                    'descripcion' => $observacion['descripcion']
+                ]);
+            }
+
             return \response($permiso);
         }
         return response()->json([
