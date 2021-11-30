@@ -27,16 +27,16 @@ class RegistroMantenimiento extends Model
 
     public function vehiculo()
     {
-        return $this->belongsTo(Vehiculo::class, 'placa');
+        return $this->belongsTo(Vehiculo::class, 'placa_vehiculo', 'placa');
     }
 
     public function detalleMantenimiento()
     {
-        return $this->hasMany(DetalleMantenimiento::class, 'id_registro', 'id');
+        return $this->hasMany(DetalleMantenimiento::class, 'id', 'id_registro');
     }
 
     public function observacionMantenimiento()
     {
-        return $this->hasMany(ObservacionMantenimiento::class, 'id_registro', 'id');
+        return $this->hasMany(ObservacionMantenimiento::class, 'id', 'id_registro');
     }
 }

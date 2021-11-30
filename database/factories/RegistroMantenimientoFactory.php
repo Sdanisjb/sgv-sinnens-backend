@@ -14,7 +14,13 @@ class RegistroMantenimientoFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'placa_vehiculo' => $this->faker->bothify('???-###'),
+            'fecha_emision' => $this->faker->dateTimeBetween('-3 weeks', 'now'),
+            'fecha_salida' => $this->faker->dateTimeBetween('now', '+1 month'),
+            'nombre_taller' => $this->faker->company(),
+            'km_actual' => $this->faker->optional()->randomNumber(),
+            'nro_factura' => $this->faker->numerify('##########'),
+            'nro_proforma' => $this->faker->optional()->numerify('##########')
         ];
     }
 }
