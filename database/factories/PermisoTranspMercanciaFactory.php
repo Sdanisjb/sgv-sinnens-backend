@@ -23,8 +23,8 @@ class PermisoTranspMercanciaFactory extends Factory
     {
         return [
             'placa' => $this->faker->unique()->bothify('???-###'),
-            'fecha_renovacion' => '2021-01-01',
-            'fecha_venc' => '2021-10-10'
+            'fecha_renovacion' => $this->faker->dateTimeBetween('-3 weeks', 'now'),
+            'fecha_venc' => $this->faker->dateTimeBetween('now', '+1 month')
         ];
     }
 }
