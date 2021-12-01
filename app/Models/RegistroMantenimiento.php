@@ -32,11 +32,11 @@ class RegistroMantenimiento extends Model
 
     public function detalleMantenimiento()
     {
-        return $this->hasMany(DetalleMantenimiento::class, 'id', 'id_registro');
+        return $this->hasMany(DetalleMantenimiento::class, 'id_registro', 'id');
     }
 
     public function observacionMantenimiento()
     {
-        return $this->hasMany(ObservacionMantenimiento::class, 'id', 'id_registro');
+        return $this->hasMany(ObservacionMantenimiento::class, 'id_registro', 'id');
     }
 }
