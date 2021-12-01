@@ -21,6 +21,6 @@ class DetalleMantenimiento extends Model
 
     public function registroMantenimiento()
     {
-        return $this->belongsTo(RegistroMantenimiento::class, 'id_registro', 'id');
+        return $this->belongsTo(RegistroMantenimiento::class, 'id', 'id_registro');
     }
 }
