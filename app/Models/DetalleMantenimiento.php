@@ -11,7 +11,10 @@ class DetalleMantenimiento extends Model
 
     protected $table = 'detalles_mantenimiento';
 
+    protected $primaryKey = null;
+
     public $timestamps = false;
+
 
     protected $fillable = [
         'id_registro',

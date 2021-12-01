@@ -11,6 +11,9 @@ class ObservacionMantenimiento extends Model
 
     protected $table = 'observaciones_mantenimiento';
 
+    protected $primaryKey = null;
+
+
     public $timestamps = false;
 
     protected $fillable = [

@@ -11,6 +11,8 @@ class ObservacionAutrisa extends Model
 
     protected $table = 'observaciones_autrisa';
 
+    protected $primaryKey = null;
+
     public $timestamps = false;
 
     protected $fillable = [
