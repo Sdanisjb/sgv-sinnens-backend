@@ -21,7 +21,7 @@ class PermisoAutrisaResource extends JsonResource
             'fecha_exam' => $this->fecha_exam,
             'hora_lev_obs' => $this->hora_lev_obs,
             'lugar_lev_obs' => $this->lugar_lev_obs,
-            'observacion' => ObservacionAutrisaResource::collection(ObservacionAutrisa::where('placa_vehiculo', $this->placa))
+            'observacion' => ObservacionAutrisaResource::collection(ObservacionAutrisa::where('placa_vehiculo', $this->placa)->get())
         ];
     }
 }

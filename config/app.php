@@ -231,7 +231,4 @@ return [
 
     ],
 
-    /** Days until venc */
-    'days_until_venc' => 14,
-
 ];
