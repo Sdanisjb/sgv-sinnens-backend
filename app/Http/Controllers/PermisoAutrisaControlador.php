@@ -38,12 +38,15 @@ class PermisoAutrisaControlador extends Controller
 
             $observaciones = $request->input('observacion');
 
+
+
             foreach ($observaciones as $observacion) {
                 ObservacionAutrisa::create([
                     'placa_vehiculo' => $placa,
                     'descripcion' => $observacion['descripcion']
                 ]);
             }
+
 
             return \response($permiso);
         }

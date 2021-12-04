@@ -15,6 +15,7 @@ class CreateAdminLogisticasTable extends Migration
     {
         Schema::create('admins_logistica', function (Blueprint $table) {
             $table->string('DNI', 8)->primary();
+            $table->integer('dias_vencimiento')->default(14);
             $table->foreign('DNI')->references('DNI')->on('usuarios')->onDelete('cascade');
         });
     }
