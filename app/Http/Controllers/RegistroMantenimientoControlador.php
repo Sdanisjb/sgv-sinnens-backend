@@ -1,5 +1,7 @@
 <?php
 
+/**CU-10,11,12 Crear Actualizar y Editar Registros de Mantenimiento  */
+
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RegistroMantenimientoResource;
@@ -28,61 +30,52 @@ class RegistroMantenimientoControlador extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  string $placa
      * @return \Illuminate\Http\Response
      */
     public function store($placa, Request $request)
     {
-        //if (Auth::user()->admin_logistica) {
-        $request->validate([
-            'fecha_emision' => 'required|date',
-            'fecha_salida' => 'required|date',
-            'nombre_taller' => 'required|string',
-            'km_actual' => 'integer',
-            'nro_factura' => 'required|string',
-            'nro_proforma' => 'string'
-        ]);
+        if (Auth::user()->admin_logistica) {
+            $request->validate([
+                'fecha_emision' => 'required|date',
+                'fecha_salida' => 'required|date',
+                'nombre_taller' => 'required|string',
+                'km_actual' => 'integer',
+                'nro_factura' => 'required|string',
+                'nro_proforma' => 'string'
+            ]);
 
-        $registro = RegistroMantenimiento::create($request->all() + [
-            'placa_vehiculo' => $placa
-        ]);
+            $registro = RegistroMantenimiento::create($request->all() + [
+                'placa_vehiculo' => $placa
+            ]);
 
-        $items_registro = $request->input('detalle');
+            $items_registro = $request->input('detalle');
 
-        foreach ($items_registro as $item) {
-            $detalle = DetalleMantenimiento::create([
-                'id_registro' => $registro->id,
-                'descripcion' => $item['descripcion'],
-                'monto' => $item['monto']
+            foreach ($items_registro as $item) {
+                $detalle = DetalleMantenimiento::create([
+                    'id_registro' => $registro->id,
+                    'descripcion' => $item['descripcion'],
+                    'monto' => $item['monto']
+                ]);
+            }
+
+            $items_observaciones = $request->input('observaciones');
+
+            foreach ($items_observaciones as $item) {
+                $detalle = ObservacionMantenimiento::create([
+                    'id_registro' => $registro->id,
+                    'descripcion' => $item['descripcion']
+                ]);
+            }
+
+            return \response($registro);
+        } else {
+            return  response()->json([
+                "message" => "unauthorized access"
             ]);
         }
-
-        $items_observaciones = $request->input('observaciones');
-
-        foreach ($items_observaciones as $item) {
-            $detalle = ObservacionMantenimiento::create([
-                'id_registro' => $registro->id,
-                'descripcion' => $item['descripcion']
-            ]);
-        }
-
-        return \response($registro);
-        // } else {
-        //     return  response()->json([
-        //         "message" => "unauthorized access"
-        //     ]);
-        // }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
